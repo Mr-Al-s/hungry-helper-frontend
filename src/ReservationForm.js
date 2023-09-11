@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, FormLabel, FormControl, Button } from 'react-bootstrap';
+import './ReservationForm.css'; // Import the CSS file
 
 class ReservationForm extends Component {
   constructor(props) {
@@ -8,22 +9,13 @@ class ReservationForm extends Component {
       name: '',
       date: '',
       time: '',
-      numOfGuests:''
+      numOfGuests: '',
     };
   }
 
   handleInputChange = (e) => {
-    const restaurantName = e.target.name;
-    const inputDate = e.target.date;
-    const inputTime = e.target.time;
-    const inputGuests = e.target.numOfGuests;
-    console.log('restaurant details', restaurantName, inputDate, inputTime, inputGuests);
-    this.setState({ 
-      name: restaurantName,
-      date: inputDate,
-      time: inputTime,
-      numOfGuests: inputGuests
-    });
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = (e) => {
@@ -34,7 +26,7 @@ class ReservationForm extends Component {
       name: this.state.name,
       date: this.state.date,
       time: this.state.time,
-      numOfGuests: this.state.numOfGuests
+      numOfGuests: this.state.numOfGuests,
     };
 
     // Call the onSubmit callback function passed from the parent component
@@ -44,16 +36,15 @@ class ReservationForm extends Component {
     this.setState({
       name: '',
       date: '',
-      time:'',
-      numOfGuests:''
+      time: '',
+      numOfGuests: '',
     });
   };
 
-  // How to get to the reservation list after the form has been submited
-
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <div className='reservation-form-container' >
+      <Form className="reservation-form" onSubmit={this.handleSubmit}>
         <FormGroup>
           <FormLabel>Restaurant Name:</FormLabel>
           <FormControl
@@ -77,24 +68,41 @@ class ReservationForm extends Component {
         <FormGroup>
           <FormLabel>Time:</FormLabel>
           <FormControl
-            type="date"
+            type="time"
             name="time"
-            value={this.state.date}
+            value={this.state.time}
             onChange={this.handleInputChange}
             required
           />
         </FormGroup>
-        <Form.Select name="status" aria-label="Completed" className="form-select">
-            <option>Choose Number of Guests</option>
+        <FormGroup>
+          <FormLabel>Number of Guests:</FormLabel>
+          <Form.Select
+            name="numOfGuests"
+            aria-label="Number of Guests"
+            className="form-select"
+            value={this.state.numOfGuests}
+            onChange={this.handleInputChange}
+            required
+          >
+            <option value="">Choose Number of Guests</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-            <option value="more than 5">more than 5</option>
+            <option value="more than 5">More than 5</option>
           </Form.Select>
-        <Button type="submit">Submit Reservation</Button>
-        <Button type="submit">Cancel</Button>
+        </FormGroup>
+        <div className="button-container">
+          <Button type="submit" className="submit-button">
+            Submit Reservation
+          </Button>
+          <Button type="reset" className="cancel-button">
+            Cancel
+          </Button>
+        </div>
       </Form>
+      </div>
     );
   }
 }
