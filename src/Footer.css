@@ -1,12 +1,18 @@
-/* Footer.css */
-
 .footer-container {
-  background-color: blue;
-  color: #fff;
+  background-color: #c0ebd7;
+  color: #333;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px 0;
   width: 100%;
   position: fixed;
   bottom: 0;
-  height: 60px
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-container .navbar-brand {
+  font-weight: bold;
+  font-size: 1.2rem;
 }

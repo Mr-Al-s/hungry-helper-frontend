@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form } from "react-bootstrap";
-
+import './RequestForm.css';
 
 class RequestForm extends React.Component {
   constructor(props) {
@@ -69,7 +69,8 @@ class RequestForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleRequestSubmit} className="modal-content">
+      <div className="request-form-page">
+      <Form onSubmit={this.handleRequestSubmit} className="request-form-container">
           <Form.Group controlId="location" className="form-group">
             <Form.Label className="form-label">Location</Form.Label>
             <Form.Control className="form-control" type="text" />
@@ -87,6 +88,7 @@ class RequestForm extends React.Component {
           </Form.Select>
           <Button type="submit" className="form-submit-button" >Find Restaurant</Button>
         </Form>
+        </div>
     )
   }
 }

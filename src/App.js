@@ -1,28 +1,50 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { withAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RequestForm from './RequestForm';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import HomePage from './HomePage';
+import RequestForm from './RequestForm';
 import AboutUs from './AboutUs';
 import Account from './Account';
 import Footer from './Footer';
-
-
+import Header from './Header';
+import ReservationForm from './ReservationForm';
 
 class App extends React.Component {
   render() {
+    const { isAuthenticated } = this.props.auth0;
+
     return (
-      <>
         <Router>
+          {isAuthenticated && <Header />}
           <Routes>
-            <Route exact path='/' element={ this.props.auth0.isAuthenticated ?  <RequestForm /> : <HomePage/>}  />
-            <Route exact path='/about-us' element={<AboutUs />}/>
-            <Route exact path='/account' element={this.props.auth0.isAuthenticated ? < Account /> : <h2>Please Log In</h2>}/> 
+            <Route path="/" element={<HomePage />} /> {/* Add a route for the root URL */}
+            <Route path="/home" element={<HomePage />} />
+            <Route
+              path="/request-restaurant"
+              element={
+                isAuthenticated ? (
+                  <RequestForm />
+                ) : (
+                  <HomePage />
+                )
+              }
+            />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route
+              path="/account"
+              element={
+                isAuthenticated ? (
+                  <Account />
+                ) : (
+                  <h2>Please Log In</h2>
+                )
+              }
+            />
+            <Route path="/reservations" element={<ReservationForm />} />
           </Routes>
           <Footer />
         </Router>
-      </>
     );
   }
 }
