@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import RestaurantModal from './RestaurantModal';
 import { Button, Form } from "react-bootstrap";
 import './RequestForm.css';
 
@@ -16,7 +17,9 @@ class RequestForm extends React.Component {
       errorMessage: '',
       restaurant: [],
       restaurantError: '',
-      price: ''
+      price: '',
+      typeOfFood: '',
+      isModalDisplaying: false
     }
   }
 
@@ -40,12 +43,11 @@ class RequestForm extends React.Component {
         lon: lon,
         cityDisplayName: cityDisplayName,
         cityData: cityData.data[0],
-        price: e.target.price,
+        price: e.target[2].value,
       }, 
       () => {
-        console.log(lat, lon);
+        console.log(e.target[2].value);
         this.grabRestaurantData(lat, lon);
-        this.generateRandomRestaurant()
       }
       )
       
@@ -64,23 +66,38 @@ class RequestForm extends React.Component {
     console.log(restaurantData);
     try {
       let restaurant = await axios.get(restaurantData);
-      console.log(restaurant);
       this.setState({restaurant: restaurant.data});
+      console.log(restaurant);
       this.setState({price: this.state.price});
-      let filteredForPrice = restaurant.filter(restaurant => restaurant.price === this.state.price);
+      console.log(this.state.price);
+      let filteredForPrice = restaurant.data.filter(restaurant => restaurant.price === this.state.price);
       console.log(filteredForPrice);
+      if (filteredForPrice.length) {
+        let randomRestaurantIndex = Math.floor(Math.random() * filteredForPrice.length);
+        console.log(randomRestaurantIndex);
+        let randomRestaurant = filteredForPrice[randomRestaurantIndex];
+        console.log(randomRestaurant);
+        this.setState({ restaurant: randomRestaurant });
+      } else {
+        this.setState({restaurant: null})
+      }
     } catch (error) {
       console.log (`There is an error finding restaurants for the searched location: ${error.message}`);
       this.setState({restaurantError: error.response.data});
     }
   }
 
-  generateRandomRestaurant = () => {
-    return Math.floor(Math.random() * this.state.restaurant.length);
+  handleShowModal = () => {
+    this.setState({
+      isModalDisplaying: true,
+    })
   }
 
-  // renderRestaurant = () => {
-  // }
+  handleCloseModal = () => {
+    this.setState({
+      isModalDisplaying: false,
+    })
+  }
 
   render() {
     return (
@@ -101,9 +118,19 @@ class RequestForm extends React.Component {
             <option value="$$$">$$$</option>
             <option value="$$$$">$$$$</option>
           </Form.Select>
-          <Button type="submit" className="form-submit-button" >Find Restaurant</Button>
+          <Button type="submit" className="form-submit-button" onClick={this.handleShowModal} >Find Restaurant</Button>
         </Form>
-        </div>
+        {this.state.restaurant ? 
+          (<RestaurantModal
+            isModalDisplaying={this.state.isModalDisplaying}
+            restaurantName={this.state.restaurant.name}
+            restaurantImage={this.state.restaurant.image_url}
+            restaurantAddress={this.state.restaurant.address}
+            restaurantPrice={this.state.restaurant.price}
+            handleCloseModal={this.handleCloseModal}
+          />) : (<p>No restaurants found</p>)
+        }
+      </div>
     )
   }
 }
