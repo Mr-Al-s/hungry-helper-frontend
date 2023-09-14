@@ -9,7 +9,6 @@ import Account from './Account';
 import Footer from './Footer';
 import Header from './Header';
 import ReservationPage from './ReservationPage'
-import RestaurantModal from './RestaurantModal';
 
 class App extends React.Component {
   render() {
