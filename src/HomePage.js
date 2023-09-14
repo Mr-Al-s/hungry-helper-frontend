@@ -25,7 +25,7 @@ function HomePage() {
               You are authenticated. You can now submit your request for a random restaurant.
             </p>
             <div id='linkDiv'>
-              <a href='/requestrestaurant' id='homePageButton'>Submit Request</a>
+              <a href='/request-restaurant' id='homePageButton'>Submit Request</a>
             </div>
           </div>
         ) : (

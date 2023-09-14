@@ -46,10 +46,11 @@ class RequestForm extends React.Component {
         cityDisplayName: cityDisplayName,
         cityData: cityData.data[0],
         price: e.target[2].value,
+        typeOfFood: e.target[1].value
       }, 
       () => {
         console.log(e.target[2].value);
-        this.grabRestaurantData(lat, lon);
+        this.grabRestaurantData(lat, lon, this.state.typeOfFood);
       }
       )
       
@@ -63,7 +64,7 @@ class RequestForm extends React.Component {
     }
   }
 
-  grabRestaurantData = async (lat, lon) => {
+  grabRestaurantData = async (lat, lon, typeOfFood) => {
     let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
     console.log(restaurantData);
     try {
@@ -79,7 +80,18 @@ class RequestForm extends React.Component {
       console.log(this.state.price);
       let filteredForPrice = restaurant.data.filter(restaurant => restaurant.price === this.state.price);
       console.log(filteredForPrice);
+      let filteredForPriceName = filteredForPrice.map(restaurant => {
+        return {
+          name: restaurant.name,
+          address: restaurant.address
+        };
+      });
+      console.log(filteredForPriceName);
       if (filteredForPrice.length) {
+        let criteria = typeOfFood;
+        let data = filteredForPriceName;
+        let newRestaurants = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant?criteria=${criteria}&data=${data}`);
+        console.log(newRestaurants);
         let randomRestaurantIndex = Math.floor(Math.random() * filteredForPrice.length);
         console.log(randomRestaurantIndex);
         let randomRestaurant = filteredForPrice[randomRestaurantIndex];
