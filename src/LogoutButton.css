@@ -4,13 +4,13 @@
   padding: 10px 20px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  background-color: #ff6600;  
-  color: #fff; 
-  border-color: #3498db;
+  background-color: #84B4B8;  
+  color: #212529; 
+  border-color: #F3F4F6;
 }
 
 .logout-button:hover {
-  background-color: #2980b9;
-  color: #fff; 
-  border-color: #2980b9; 
+  background-color: #387F85;
+  color: #F3F4F6; 
+  border-color: #F3F4F6; 
 }

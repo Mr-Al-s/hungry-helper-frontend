@@ -5,7 +5,7 @@
 }
 
 .homepage-header {
-  background-color: #ff8a65; 
+  background-color: #6D6D6D; 
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -14,17 +14,23 @@
 .homepage-image {
   max-width: 100%;
   height: 30rem;
-  border-radius: 10px;
+  border-radius: 1rem 1rem 0 0;
+  object-fit: cover;
+}
+
+#hungryhelperTitle {
+  border-radius: 0 0 1rem 1rem;
 }
 
 .homepage-title {
   font-size: 2.5rem;
-  color: #ffffff;
+  color: #F3F4F6;
+  margin-top: 1rem;
 }
 
 .homepage-subtitle {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: #F3F4F6;
 }
 
 .homepage-content {
@@ -37,5 +43,22 @@
 
 .homepage-message {
   font-size: 1.2rem;
-  color: #444444;
+  color: #212529;
+  margin-bottom: 1rem;
+}
+
+#homePageButton {
+  background-color: #84B4B8;
+  padding: 1rem;
+  text-decoration: none;
+  color: #F3F4F6;
+  border-radius: 1rem;
+}
+
+#homePageButton:hover {
+  background-color: #387F85;
+}
+
+#linkDiv {
+  margin-top: 2rem;
 }
