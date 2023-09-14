@@ -2,7 +2,6 @@ import React from "react";
 import ReservationForm from "./ReservationForm";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-// import { Link } from "react-router-dom";
 import { withAuth0 } from '@auth0/auth0-react';
 import "./RestaurantModal.css";
 
@@ -15,18 +14,6 @@ class RestaurantModal extends React.Component {
       name: ''
     };
   }
-
-
-  // openReservationForm = (e) => {
-  //  e.preventDefault();
-  //   console.log('open reservation form');
-  //   console.log(this.props);
-  //   this.setState({
-  //     isPageDisplaying: true,
-  //     name: this.props.restaurantName
-  //   });
-  //   console.log(this.state.name);
-  // };
 
   handleShowForm = () => {
     this.setState({
@@ -66,14 +53,6 @@ class RestaurantModal extends React.Component {
             <Button onClick={this.props.handleCloseModal} id="closeButton">
               Back to Request Form
             </Button>
-            {/* <Link
-              to={{
-                pathname: "/reservationform",
-                state: { restaurantName: this.props.restaurantName }, // Pass restaurantName as state
-              }}
-            >
-              <Button id="submitButton">Make Reservation</Button>
-            </Link> */}
              <Button onClick={this.handleShowForm} id="submitButton">Make Reservation</Button>
           </div>
         </Modal>

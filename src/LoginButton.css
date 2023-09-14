@@ -7,14 +7,15 @@
   padding: 10px 30px; 
   font-size: 16px; 
   border-radius: 25px; 
-  background-color: #ff6600; 
-  color: #fff; 
-  border: none;
+  background-color: #84B4B8; 
+  color: #212529; 
+  border-color: #F3F4F6;
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-transform: uppercase; 
 }
 
 .login-button:hover {
-  background-color: #2980b9; 
+  background-color: #387F85;
+  color: #F3F4F6;
   transform: scale(1.05); 
 }
