@@ -14,7 +14,6 @@ class Header extends React.Component {
           <NavItem><Link to='/home' className='nav-link'>Home</Link></NavItem>
           {/* PLACEHOLDER: render a navigation link to the about page */}
           <NavItem><Link to='/request-restaurant' className='nav-link'>Request Restaurant</Link></NavItem>
-          <NavItem><Link to='/reservationform' className='nav-link'>Reservation Form</Link></NavItem>
           <NavItem><Link to='/reservations' className='nav-link'>Reservations</Link></NavItem>
           <NavItem><Link to='/about-us' className='nav-link'>About Us</Link></NavItem>
           <NavItem><Link to='/account' className='nav-link'>My Account</Link></NavItem>
