@@ -16,7 +16,6 @@ class Header extends React.Component {
         </Navbar.Brand>
         <div className='navItems'>
           <NavItem><Link to='/request-restaurant' className='nav-link'>Request Restaurant</Link></NavItem>
-          <NavItem><Link to='/reservationform' className='nav-link'>Reservation Form</Link></NavItem>
           <NavItem><Link to='/reservations' className='nav-link'>Reservations</Link></NavItem>
           <NavItem><Link to='/about-us' className='nav-link'>About Us</Link></NavItem>
           <NavItem><Link to='/account' className='nav-link'>My Account</Link></NavItem>

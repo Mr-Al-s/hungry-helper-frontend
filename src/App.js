@@ -8,7 +8,6 @@ import AboutUs from './AboutUs';
 import Account from './Account';
 import Footer from './Footer';
 import Header from './Header';
-import ReservationForm from './ReservationForm';
 import ReservationPage from './ReservationPage'
 import RestaurantModal from './RestaurantModal';
 
@@ -43,8 +42,6 @@ class App extends React.Component {
                 )
               }
             />
-            <Route path="/restaurantmodal" element={<RestaurantModal />} />
-            <Route path="/reservationform" element={<ReservationForm />} />
             <Route path="/reservations" element={<ReservationPage />} />
           </Routes>
           <Footer />
