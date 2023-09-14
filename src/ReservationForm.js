@@ -7,13 +7,14 @@ import {
   Button,
   Modal
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import ReservationPage from "./ReservationPage";
 import "./ReservationForm.css"; // Import the CSS file
 import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
-let SERVER = process.env.REACT_APP_SERVER
+let SERVER = process.env.REACT_APP_SERVER_URL
 class ReservationForm extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,7 @@ class ReservationForm extends Component {
       name: "",
       date: "",
       time: "",
-      numOfGuests: "",
+      numberOfGuests: "",
       reservations: []
     };
   }
@@ -41,14 +42,18 @@ class ReservationForm extends Component {
          headers: {"Authorization" : `Bearer ${jwt}`}
        }
       let url = `${SERVER}/reservations`;
+      console.log(url);
       let createdReservation = await axios.post(url, newReservation, config);
       console.log('created reservation', createdReservation);
       // this.getBooks();
       this.setState({
         reservations: [...this.state.reservations, createdReservation.data]
       });
+      if (createdReservation.status === 200) {
+        this.props.navigate('/reservations');
+      }
     } catch(error) {
-      console.log('We have an error;', error.response.data);
+      console.log('We have an error;', error);
     }
   }
 
@@ -76,21 +81,25 @@ class ReservationForm extends Component {
 
     // Prepare the reservation object to send to the parent component
     const reservation = {
-      name: this.state.name,
-      date: this.state.date,
-      time: this.state.time,
-      numOfGuests: this.state.numOfGuests,
+      name: e.target.name.value,
+      date: e.target.date.value,
+      time: e.target.time.value,
+      numberOfGuests: e.target.numOfGuests.value,
+      image: this.props.restaurantImage,
+      address: this.props.restaurantAddress,
+      price: this.props.restaurantPrice
     };
 
     // Call the onSubmit callback function passed from the parent component
-    this.props.onSubmit(reservation);
+    // this.props.onSubmit(reservation);
+    this.postReservations(reservation);
 
     // Clear the form fields
     this.setState({
       name: "",
       date: "",
       time: "",
-      numOfGuests: "",
+      numberOfGuests: "",
     });
   };
 
@@ -110,9 +119,9 @@ class ReservationForm extends Component {
               <FormControl
                 type="text"
                 name="name"
-                value={this.state.name}
+                defaultValue={this.props.restaurantName}
                 onChange={this.handleInputChange}
-                placeholder={this.props.restaurantName}
+                // placeholder={this.props.restaurantName}
                 required
                 // readOnly
               />
@@ -122,7 +131,7 @@ class ReservationForm extends Component {
               <FormControl
                 type="date"
                 name="date"
-                value={this.state.date}
+                defaultValue={this.state.date}
                 onChange={this.handleInputChange}
                 required
               />
@@ -132,7 +141,7 @@ class ReservationForm extends Component {
               <FormControl
                 type="time"
                 name="time"
-                value={this.state.time}
+                defaultValue={this.state.time}
                 onChange={this.handleInputChange}
                 required
               />
@@ -143,7 +152,7 @@ class ReservationForm extends Component {
                 name="numOfGuests"
                 aria-label="Number of Guests"
                 className="form-select"
-                value={this.state.numOfGuests}
+                defaultValue={this.state.numberOfGuests}
                 onChange={this.handleInputChange}
                 required
               >
@@ -159,7 +168,7 @@ class ReservationForm extends Component {
               <Button onClick={this.props.handleCloseForm} type="reset" className="cancel-button">
                 Cancel
               </Button>
-              <Link to="/reservations">
+              {/* <Link to="/reservations"> */}
                 <Button
                   // onClick={this.openReservationPage}
                   type="submit"
@@ -167,7 +176,7 @@ class ReservationForm extends Component {
                 >
                   Submit Reservation
                 </Button>
-              </Link>
+              {/* </Link> */}
             </div>
           </Form>
         </Modal.Body>
@@ -183,4 +192,8 @@ class ReservationForm extends Component {
   }
 }
 
-export default withAuth0(ReservationForm);
+export default withAuth0(FormWithNavigate);
+function FormWithNavigate(props) {
+  const navigate = useNavigate();
+  return <ReservationForm {...props} navigate={navigate} />
+}

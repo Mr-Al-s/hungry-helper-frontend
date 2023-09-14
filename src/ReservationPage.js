@@ -3,13 +3,20 @@ import "./ReservationPage.css";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
+import { Button } from "react-bootstrap";
 
 let SERVER = process.env.REACT_APP_SERVER_URL;
 class ReservationPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      reservations: []
+    }
 
+  }
 
   getReservations = async () => {
-    console.log(this.props.reservations);
+    console.log(this.props.auth0.isAuthenticated);
     if (this.props.auth0.isAuthenticated) {
       try {
         // get token
@@ -50,7 +57,7 @@ class ReservationPage extends React.Component {
       this.setState({
         reservations: updatedReservations,
       });
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log("We have an error;", error.response.data);
     }
@@ -76,32 +83,34 @@ class ReservationPage extends React.Component {
   };
 
   componentDidMount = async () => {
-    this.getReservations();
+    setTimeout(() => {
+      this.getReservations();
+    }, 850)
   };
 
   render() {
     return (
-      <div>
-        {this.props.reservations ? (
-          this.props.reservations.map((reservation) => (
+      <div className="card-container">
+        {this.state.reservations.length > 0 ? (
+          this.state.reservations.map((reservation) => (
             <Card
               key={reservation._id}
-              style={{ width: "100%" }}
-              className="reservation-page p-1 h-100"
+              className="reservation-card"
             >
+              <Card.Body>
               <Card.Img
                 variant="top"
-                src={reservation.restaurantImage}
-                alt={reservation.restaurantName}
-                title={reservation.restaurantName}
+                src={reservation.image}
+                alt={reservation.name}
+                title={reservation.name}
               />
-              <Card.Body>
-                <Card.Title>{reservation.restaurantName}</Card.Title>
-                <Card.Text>{reservation.restaurantAddress}</Card.Text>
-                <Card.Text>{reservation.restaurantPrice}</Card.Text>
+                <Card.Title>{reservation.name}</Card.Title>
+                <Card.Text>{reservation.address}</Card.Text>
+                <Card.Text>{reservation.price}</Card.Text>
                 <Card.Text>{reservation.date}</Card.Text>
                 <Card.Text>{reservation.time}</Card.Text>
               </Card.Body>
+              <Button onClick={() => this.deleteReservations(reservation._id)} variant="danger" className="delete-button">Delete</Button>
             </Card>
           ))
         ) : (
