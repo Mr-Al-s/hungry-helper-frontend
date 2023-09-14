@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import RestaurantModal from './RestaurantModal';
 import { Button, Form } from "react-bootstrap";
+// import { getIdTokenSilently } from '@auth0/auth0-react';
+import { withAuth0 } from '@auth0/auth0-react';
 import './RequestForm.css';
 
 class RequestForm extends React.Component {
@@ -65,7 +67,12 @@ class RequestForm extends React.Component {
     let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
     console.log(restaurantData);
     try {
+
+      
+// bring over auth token with request see reservation form for example!
+
       let restaurant = await axios.get(restaurantData);
+      console.log(restaurant);
       this.setState({restaurant: restaurant.data});
       console.log(restaurant);
       this.setState({price: this.state.price});
@@ -76,17 +83,20 @@ class RequestForm extends React.Component {
         let randomRestaurantIndex = Math.floor(Math.random() * filteredForPrice.length);
         console.log(randomRestaurantIndex);
         let randomRestaurant = filteredForPrice[randomRestaurantIndex];
+        console.log(randomRestaurant.name);
         console.log(randomRestaurant);
         this.setState({ restaurant: randomRestaurant });
+        console.log(restaurant);
       } else {
         this.setState({restaurant: null})
       }
     } catch (error) {
       console.log (`There is an error finding restaurants for the searched location: ${error.message}`);
-      this.setState({restaurantError: error.response.data});
+      console.log(error);
+      this.setState({restaurantError: error});
     }
   }
-
+  
   handleShowModal = () => {
     this.setState({
       isModalDisplaying: true,
@@ -128,6 +138,7 @@ class RequestForm extends React.Component {
             restaurantAddress={this.state.restaurant.address}
             restaurantPrice={this.state.restaurant.price}
             handleCloseModal={this.handleCloseModal}
+            restuarant={this.state.restaurant}
           />) : (<p>No restaurants found</p>)
         }
       </div>
@@ -135,4 +146,4 @@ class RequestForm extends React.Component {
   }
 }
 
-export default RequestForm;
+export default withAuth0(RequestForm);
