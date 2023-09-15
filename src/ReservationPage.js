@@ -62,8 +62,16 @@ class ReservationPage extends React.Component {
 
   putReservations = async (reservationToUpdate) => {
     try {
-      let url = `${SERVER}/reservations/${reservationToUpdate._id}`;
-      let updatedReservation = await axios.put(url, reservationToUpdate);
+      const res = await this.props.auth0.getIdTokenClaims();
+      const jwt = res.__raw;
+      const config = {
+        method: "put",
+        baseURL: SERVER,
+        url: "/reservations/"+reservationToUpdate._id,
+        headers: { Authorization: `Bearer ${jwt}` },
+        data: reservationToUpdate,
+      }
+      let updatedReservation = await axios(config);
       let updatedReservations = this.state.reservations.map(
         (existingReservation) => {
           return existingReservation._id === reservationToUpdate._id
