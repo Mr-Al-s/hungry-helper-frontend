@@ -39,7 +39,7 @@ class About extends Component {
             </Card.Body>
           </Card>
           <Card>
-            <Card.Img variant='top' src={luke} className='card-img-top' />
+            <Card.Img variant='top' src={luke} className='about-card-img-top' />
             <Card.Body className='about-card-body'>
               <Card.Title className='about-card-title'>Luke Rogers</Card.Title>
               <Card.Text className='about-card-text'>
