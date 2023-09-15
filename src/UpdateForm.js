@@ -60,9 +60,7 @@ class UpdateForm extends React.Component {
                 name="name"
                 defaultValue={this.props.reservation.name}
                 onChange={this.handleInputChange}
-                // placeholder={this.props.restaurantName}
                 required
-                // readOnly
               />
             </FormGroup>
             <FormGroup>
@@ -107,15 +105,12 @@ class UpdateForm extends React.Component {
               <Button onClick={this.props.handleCloseForm} type="reset" className="cancel-button">
                 Cancel
               </Button>
-              {/* <Link to="/reservations"> */}
                 <Button
-                  // onClick={this.openReservationPage}
                   type="submit"
                   className="submit-button"
                 >
                   Update Reservation
                 </Button>
-              {/* </Link> */}
             </div>
           </Form>
         </Modal.Body>

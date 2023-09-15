@@ -8,8 +8,8 @@ const LogoutButton = () => {
 
   return (
     <Button
-      variant="outline-primary" // Change the button style to outline with a primary color
-      className="logout-button" // Apply custom CSS class for styling
+      variant="outline-primary"
+      className="logout-button"
       onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
     >
       Log Out

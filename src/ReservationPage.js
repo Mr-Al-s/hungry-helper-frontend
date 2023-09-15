@@ -22,11 +22,8 @@ class ReservationPage extends React.Component {
     console.log(this.props.auth0.isAuthenticated);
     if (this.props.auth0.isAuthenticated) {
       try {
-        // get token
         const res = await this.props.auth0.getIdTokenClaims();
-        // extract the raw token
         const jwt = res.__raw;
-        console.log(jwt);
         const config = {
           method: "get",
           baseURL: SERVER,
@@ -34,8 +31,6 @@ class ReservationPage extends React.Component {
           headers: { Authorization: `Bearer ${jwt}` },
         };
         const results = await axios(config);
-        // let results = await axios.get(`${SERVER}/books`);
-        console.log(results);
         this.setState(
           {
             reservations: results.data,
@@ -60,7 +55,6 @@ class ReservationPage extends React.Component {
       this.setState({
         reservations: updatedReservations,
       });
-      // window.location.reload();
     } catch (error) {
       console.log("We have an error;", error.response.data);
     }

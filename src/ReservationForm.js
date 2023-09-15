@@ -7,9 +7,8 @@ import {
   Button,
   Modal
 } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 import ReservationPage from "./ReservationPage";
-import "./ReservationForm.css"; // Import the CSS file
+import "./ReservationForm.css";
 import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
@@ -27,25 +26,17 @@ class ReservationForm extends Component {
     };
   }
 
-  /* TODO: Make a GET request to your API to fetch all the reservations from the database  */
-
 
 
   postReservations = async (newReservation) => {
     try{
-       // get token
        const res = await this.props.auth0.getIdTokenClaims();
-       // extract the raw token
        const jwt = res.__raw;
-       console.log(jwt);
        const config = {
          headers: {"Authorization" : `Bearer ${jwt}`}
        }
       let url = `${SERVER}/reservations`;
-      console.log(url);
       let createdReservation = await axios.post(url, newReservation, config);
-      console.log('created reservation', createdReservation);
-      // this.getBooks();
       this.setState({
         reservations: [...this.state.reservations, createdReservation.data]
       });
@@ -61,9 +52,6 @@ class ReservationForm extends Component {
 
 
   openReservationPage = (e) => {
-    // console.log('open reservation form');
-    // console.log(this.props);
-    console.log(e);
     this.setState({
       makeSubmitReservationButtonClicked: true,
     });
@@ -72,14 +60,10 @@ class ReservationForm extends Component {
   handleInputChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-    console.log(this.props.restaurantName);
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handle submit event', e);
-
-    // Prepare the reservation object to send to the parent component
     const reservation = {
       name: e.target.name.value,
       date: e.target.date.value,
@@ -90,11 +74,8 @@ class ReservationForm extends Component {
       price: this.props.restaurantPrice
     };
 
-    // Call the onSubmit callback function passed from the parent component
-    // this.props.onSubmit(reservation);
     this.postReservations(reservation);
 
-    // Clear the form fields
     this.setState({
       name: "",
       date: "",
@@ -121,9 +102,7 @@ class ReservationForm extends Component {
                 name="name"
                 defaultValue={this.props.restaurantName}
                 onChange={this.handleInputChange}
-                // placeholder={this.props.restaurantName}
                 required
-                // readOnly
               />
             </FormGroup>
             <FormGroup>
@@ -168,21 +147,18 @@ class ReservationForm extends Component {
               <Button onClick={this.props.handleCloseForm} type="reset" className="cancel-button">
                 Cancel
               </Button>
-              {/* <Link to="/reservations"> */}
                 <Button
-                  // onClick={this.openReservationPage}
                   type="submit"
                   className="submit-button"
                 >
                   Submit Reservation
                 </Button>
-              {/* </Link> */}
             </div>
           </Form>
         </Modal.Body>
         {this.state.makeSubmitReservationButtonClicked ? (
           <ReservationPage
-            reservations={this.state.reservations} // Pass reservation data as a prop
+            reservations={this.state.reservations}
             openReservationPage={this.openReservationPage}
             restaurant={this.props.restaurant}
           />
