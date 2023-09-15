@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar, NavItem } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-// import canOfBooks from './img/can-of-books.png';
 import './Header.css';
 import logo from './img/logo.png'
 

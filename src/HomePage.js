@@ -1,12 +1,12 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react'; // Import useAuth0
+import { useAuth0 } from '@auth0/auth0-react';
 import AuthButtons from './AuthButtons';
 import homepage from './img/homepage.png';
 import hungryhelperTitle from './img/hungryhelper.png'
 import './HomePage.css';
 
 function HomePage() {
-  const { isAuthenticated } = useAuth0(); // Get the isAuthenticated status
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className="homepage-container">
@@ -18,7 +18,6 @@ function HomePage() {
         </p>
       </div>
       <div className="homepage-content">
-        {/* Conditionally render the message and AuthButtons */}
         {isAuthenticated ? (
           <div>
             <p className="homepage-message">

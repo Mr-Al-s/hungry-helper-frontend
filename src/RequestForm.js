@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import RestaurantModal from './RestaurantModal';
 import { Button, Form } from "react-bootstrap";
-// import { getIdTokenSilently } from '@auth0/auth0-react';
 import { withAuth0 } from '@auth0/auth0-react';
 import './RequestForm.css';
 
@@ -30,10 +29,7 @@ class RequestForm extends React.Component {
     this.setState({
       cityName: e.target[0].value
     });
-    console.log(e.target[0].value);
     let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${e.target[0].value}&format=json`;
-
-    console.log(url);
     try {
       
       let cityData = await axios.get(url);
@@ -49,7 +45,6 @@ class RequestForm extends React.Component {
         typeOfFood: e.target[1].value
       }, 
       () => {
-        console.log(e.target[2].value);
         this.grabRestaurantData(lat, lon, this.state.typeOfFood);
       }
       )
@@ -66,26 +61,15 @@ class RequestForm extends React.Component {
 
   grabRestaurantData = async (lat, lon, typeOfFood) => {
     let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
-    console.log(restaurantData);
     try {
-
-      
-// bring over auth token with request see reservation form for example!
-
       let restaurant = await axios.get(restaurantData);
-      console.log(restaurant);
       this.setState({restaurant: restaurant.data});
-      console.log(restaurant);
       this.setState({price: this.state.price});
-      console.log(this.state.price);
       let filteredForPrice = restaurant.data.filter(restaurant => restaurant.price === this.state.price);
-      console.log(filteredForPrice);
-      console.log(filteredForPrice);
       if (filteredForPrice.length >= 1) {
         let criteria = typeOfFood;
         let data = JSON.stringify(filteredForPrice);
         let results = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant`, { criteria, data });
-        console.log(results.data.filteredData);
         let filteredData = results.data.filteredData
         const startIndex = filteredData.indexOf(':') + 1;
         const jsonData = filteredData.slice(startIndex);
@@ -99,14 +83,9 @@ class RequestForm extends React.Component {
               address: restaurant.address,
               price: restaurant.price
             }));
-            console.log(restaurantInfo);
             let randomRestaurantIndex = Math.floor(Math.random() * restaurantInfo.length);
-            console.log(randomRestaurantIndex);
             let randomRestaurant = restaurantInfo[randomRestaurantIndex];
-            console.log(randomRestaurant.name);
-            console.log(randomRestaurant);
             this.setState({ restaurant: randomRestaurant });
-            console.log(restaurant);
           } else {
             console.log("No restaurants found in the JSON data.");
           }
