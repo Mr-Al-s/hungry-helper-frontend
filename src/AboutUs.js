@@ -43,7 +43,7 @@ class About extends Component {
             <Card.Body className='about-card-body'>
               <Card.Title className='about-card-title'>Luke Rogers</Card.Title>
               <Card.Text className='about-card-text'>
-                Loves anything and everything Sports. Obsessed with competition. If he's not winning, he's not living.
+                Loves all kinds of restaurants. Will eat anything that is put in front of him. Has a sophisticated pallet.
               </Card.Text>
               <div className='button-container'>
                 <Button

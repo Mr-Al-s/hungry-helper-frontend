@@ -73,6 +73,7 @@ class RequestForm extends React.Component {
         let filteredData = results.data.filteredData
         const startIndex = filteredData.indexOf(':') + 1;
         const jsonData = filteredData.slice(startIndex);
+        console.log(jsonData);
         try {
           const dataArray = JSON.parse(jsonData);
         
