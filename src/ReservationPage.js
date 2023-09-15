@@ -1,16 +1,19 @@
 import React from "react";
-import "./ReservationPage.css";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import UpdateForm from "./UpdateForm";
 import { withAuth0 } from "@auth0/auth0-react";
 import { Button } from "react-bootstrap";
+import "./ReservationPage.css";
 
 let SERVER = process.env.REACT_APP_SERVER_URL;
 class ReservationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservations: []
+      reservations: [],
+      showUpdateReservation: false,
+      reservationToUpdate: null
     }
 
   }
@@ -78,9 +81,22 @@ class ReservationPage extends React.Component {
         reservations: updatedReservations,
       });
     } catch (error) {
-      console.log("We have an error;", error.response.data);
+      console.log("We have an error;", error);
     }
   };
+
+  showUpdateForm = (reservationToBeUpdated) => {
+    this.setState({
+      reservationToUpdate: reservationToBeUpdated,
+      showUpdateReservation: true
+    })
+  }
+
+  handleCloseForm = () => {
+    this.setState({
+      showUpdateReservation: false,
+    })
+  }
 
   componentDidMount = async () => {
     setTimeout(() => {
@@ -93,24 +109,29 @@ class ReservationPage extends React.Component {
       <div className="card-container">
         {this.state.reservations.length > 0 ? (
           this.state.reservations.map((reservation) => (
-            <Card
+            <Card 
               key={reservation._id}
-              className="reservation-card"
+              className="reservation-card p-1"
             >
-              <Card.Body>
-              <Card.Img
-                variant="top"
-                src={reservation.image}
-                alt={reservation.name}
-                title={reservation.name}
-              />
-                <Card.Title>{reservation.name}</Card.Title>
-                <Card.Text>{reservation.address}</Card.Text>
-                <Card.Text>{reservation.price}</Card.Text>
-                <Card.Text>{reservation.date}</Card.Text>
-                <Card.Text>{reservation.time}</Card.Text>
+              <Card.Body id="res-card-body">
+                <Card.Img
+                  variant="top"
+                  src={reservation.image}
+                  alt={reservation.name}
+                  title={reservation.name}
+                  className="res-card-img"
+                />
+                  <Card.Title className="res-card-title">{reservation.name}</Card.Title>
+                  <Card.Text className="res-card-text">Address: {reservation.address}</Card.Text>
+                  <Card.Text className="res-card-text">Price: {reservation.price}</Card.Text>
+                  <Card.Text className="res-card-text">Date: {reservation.date}</Card.Text>
+                  <Card.Text className="res-card-text">Time: {reservation.time}</Card.Text>
+                  <Card.Text className="res-card-text">Number of Guests: {reservation.numberOfGuests}</Card.Text>
               </Card.Body>
-              <Button onClick={() => this.deleteReservations(reservation._id)} variant="danger" className="delete-button">Delete</Button>
+              <div id="res-button-container">
+                <Button onClick={() => this.deleteReservations(reservation._id)} variant="danger" className="delete-button">Delete</Button>
+                {this.state.showUpdateReservation ? <UpdateForm putReservations={this.putReservations} showUpdateForm={this.showUpdateForm} handleCloseForm={this.handleCloseForm} reservation={this.state.reservationToUpdate} /> : <Button id="update-button" showUpdateForm={this.showUpdateForm} reservation={reservation} onClick={() => this.showUpdateForm(reservation)}>Edit</Button>}
+              </div>
             </Card>
           ))
         ) : (
