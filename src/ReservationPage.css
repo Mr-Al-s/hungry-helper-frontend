@@ -4,59 +4,75 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   padding: 20px;
+  width: 100%;
+  padding-bottom: 10rem;
+  background-color: #c0ebd7;
 }
 
 .reservation-card {
-  flex: 0 0 calc(32% - 20px);
-  margin: 10px;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+  width: 20rem;
+  height: 40rem;
+  margin-bottom: 1rem;
+  background-color: #F3F4F6;
 }
 
-.reservation-card:hover {
-  transform: scale(1.05);
+#res-card-body{
+  background-color: #6D6D6D;
+  margin: 1rem;
+  border-radius: 1rem;
 }
 
-.card-img {
+.res-card-img {
   width: 100%;
-  max-height: 200px;
+  max-height: 15rem;
   object-fit: cover;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
+  margin: auto;
 }
 
-.card-title {
-  font-size: 1.5rem;
-  margin-top: 10px;
-  margin-bottom: 0;
-  color: black;
+.res-card-title {
+  color: #F3F4F6;
+  margin-top: 1rem;
+  text-align: center;
 }
 
-.card-text {
+.res-card-text {
   margin-top: 5px;
-  color: black;
+  color: #F3F4F6;
+}
+
+#res-button-container {
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+#update-button {
+  background-color: #84B4B8; 
+  border: none;
+  color: #212529;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+#update-button:hover {
+  background-color: #387F85;
+  color: #F3F4F6; 
 }
 
 .delete-button {
-  margin-top: 10px;
-  background-color: #e74c3c;
-  color: #fff;
+  background-color: #212529; 
+  color: #F3F4F6;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
-  background-color: #c0392b;
+  background-color: #000000;
 }

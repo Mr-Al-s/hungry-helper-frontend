@@ -80,25 +80,39 @@ class RequestForm extends React.Component {
       console.log(this.state.price);
       let filteredForPrice = restaurant.data.filter(restaurant => restaurant.price === this.state.price);
       console.log(filteredForPrice);
-      let filteredForPriceName = filteredForPrice.map(restaurant => {
-        return {
-          name: restaurant.name,
-          address: restaurant.address
-        };
-      });
-      console.log(filteredForPriceName);
-      if (filteredForPrice.length) {
+      console.log(filteredForPrice);
+      if (filteredForPrice.length >= 1) {
         let criteria = typeOfFood;
-        let data = filteredForPriceName;
-        let newRestaurants = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant?criteria=${criteria}&data=${data}`);
-        console.log(newRestaurants);
-        let randomRestaurantIndex = Math.floor(Math.random() * filteredForPrice.length);
-        console.log(randomRestaurantIndex);
-        let randomRestaurant = filteredForPrice[randomRestaurantIndex];
-        console.log(randomRestaurant.name);
-        console.log(randomRestaurant);
-        this.setState({ restaurant: randomRestaurant });
-        console.log(restaurant);
+        let data = JSON.stringify(filteredForPrice);
+        let results = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant`, { criteria, data });
+        console.log(results.data.filteredData);
+        let filteredData = results.data.filteredData
+        const startIndex = filteredData.indexOf(':') + 1;
+        const jsonData = filteredData.slice(startIndex);
+        try {
+          const dataArray = JSON.parse(jsonData);
+        
+          if (Array.isArray(dataArray) && dataArray.length > 0) {
+            const restaurantInfo = dataArray.map(restaurant => ({
+              image_url: restaurant.image_url,
+              name: restaurant.name,
+              address: restaurant.address,
+              price: restaurant.price
+            }));
+            console.log(restaurantInfo);
+            let randomRestaurantIndex = Math.floor(Math.random() * restaurantInfo.length);
+            console.log(randomRestaurantIndex);
+            let randomRestaurant = restaurantInfo[randomRestaurantIndex];
+            console.log(randomRestaurant.name);
+            console.log(randomRestaurant);
+            this.setState({ restaurant: randomRestaurant });
+            console.log(restaurant);
+          } else {
+            console.log("No restaurants found in the JSON data.");
+          }
+        } catch (error) {
+          console.error("Error parsing JSON data:", error);
+        }
       } else {
         this.setState({restaurant: null})
       }

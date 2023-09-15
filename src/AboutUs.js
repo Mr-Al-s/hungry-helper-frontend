@@ -11,11 +11,11 @@ class About extends Component {
       <div className='about-us-container'>
         <h1 className='page-header'>The Developers</h1>
         <div className='card-div'>
-          <Card className='card-body'>
-            <Card.Img variant='top' src={adnan} className='card-img-top' />
-            <Card.Body className='card-body-text'>
-              <Card.Title>Adnan Mohamud</Card.Title>
-              <Card.Text>
+          <Card>
+            <Card.Img variant='top' src={adnan} className='about-card-img-top' />
+            <Card.Body className='about-card-body'>
+              <Card.Title className='about-card-title'>Adnan Mohamud</Card.Title>
+              <Card.Text className='about-card-text'>
                 Enjoys playing and watching basketball. Likes to build websites during his free time. Traveler enthusiast.
               </Card.Text>
               <div className='button-container'>
@@ -25,7 +25,7 @@ class About extends Component {
                   target='_blank'
                   className='profile-button'
                 >
-                  Go to Adnan's GitHub Profile
+                  GitHub
                 </Button>
                 <Button
                   variant='primary'
@@ -33,16 +33,16 @@ class About extends Component {
                   target='_blank'
                   className='profile-button'
                 >
-                  Go to Adnan's LinkedIn Profile
+                  LinkedIn
                 </Button>
               </div>
             </Card.Body>
           </Card>
-          <Card className='card-body'>
+          <Card>
             <Card.Img variant='top' src={luke} className='card-img-top' />
-            <Card.Body className='card-body-text'>
-              <Card.Title>Luke Rogers</Card.Title>
-              <Card.Text>
+            <Card.Body className='about-card-body'>
+              <Card.Title className='about-card-title'>Luke Rogers</Card.Title>
+              <Card.Text className='about-card-text'>
                 Loves anything and everything Sports. Obsessed with competition. If he's not winning, he's not living.
               </Card.Text>
               <div className='button-container'>
@@ -52,7 +52,7 @@ class About extends Component {
                   target='_blank'
                   className='profile-button'
                 >
-                  Go to Luke's GitHub Profile
+                  GitHub
                 </Button>
                 <Button
                   variant='primary'
@@ -60,7 +60,7 @@ class About extends Component {
                   target='_blank'
                   className='profile-button'
                 >
-                  Go to Luke's LinkedIn Profile
+                  LinkedIn
                 </Button>
               </div>
             </Card.Body>
