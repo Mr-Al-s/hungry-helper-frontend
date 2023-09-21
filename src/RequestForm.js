@@ -19,7 +19,7 @@ class RequestForm extends React.Component {
       restaurant: [],
       restaurantError: '',
       price: '',
-      typeOfFood: '',
+      food: '',
       isModalDisplaying: false
     }
   }
@@ -42,10 +42,10 @@ class RequestForm extends React.Component {
         cityDisplayName: cityDisplayName,
         cityData: cityData.data[0],
         price: e.target[2].value,
-        typeOfFood: e.target[1].value
+        food: e.target[1].value
       }, 
       () => {
-        this.grabRestaurantData(lat, lon, this.state.typeOfFood);
+        this.grabRestaurantData(lat, lon);
       }
       )
       
@@ -59,40 +59,44 @@ class RequestForm extends React.Component {
     }
   }
 
-  grabRestaurantData = async (lat, lon, typeOfFood) => {
+  grabRestaurantData = async (lat, lon) => {
     let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
     try {
       let restaurant = await axios.get(restaurantData);
-      this.setState({restaurant: restaurant.data});
-      this.setState({price: this.state.price});
+      this.setState({
+        restaurant: restaurant.data,
+        price: this.state.price,
+        food: this.state.food
+      });
       let filteredForPrice = restaurant.data.filter(restaurant => restaurant.price === this.state.price);
-      if (filteredForPrice.length >= 1) {
-        let criteria = typeOfFood;
-        let data = JSON.stringify(filteredForPrice);
-        let results = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant`, { criteria, data });
-        let filteredData = results.data.filteredData
-        const startIndex = filteredData.indexOf(':') + 1;
-        const jsonData = filteredData.slice(startIndex);
-        console.log(jsonData);
-        try {
-          const dataArray = JSON.parse(jsonData);
+      console.log(filteredForPrice);
+      console.log(this.state.food);
+      let filteredForFood = filteredForPrice.filter(restaurant => {
+        return restaurant.food.some(food => food.alias.includes(this.state.food));
+      });
+      
+      console.log(filteredForFood);
+      if (filteredForFood.length >= 1) {
+      //   let criteria = typeOfFood;
+      //   let data = JSON.stringify(filteredForPrice);
+      //   let results = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant`, { criteria, data });
+      //   let filteredData = results.data.filteredData
+      //   const startIndex = filteredData.indexOf(':') + 1;
+      //   const jsonData = filteredData.slice(startIndex);
+      //   console.log(jsonData);
+      //   try {
+      //     const dataArray = JSON.parse(jsonData);
         
-          if (Array.isArray(dataArray) && dataArray.length > 0) {
-            const restaurantInfo = dataArray.map(restaurant => ({
-              image_url: restaurant.image_url,
-              name: restaurant.name,
-              address: restaurant.address,
-              price: restaurant.price
-            }));
-            let randomRestaurantIndex = Math.floor(Math.random() * restaurantInfo.length);
-            let randomRestaurant = restaurantInfo[randomRestaurantIndex];
-            this.setState({ restaurant: randomRestaurant });
-          } else {
-            console.log("No restaurants found in the JSON data.");
-          }
-        } catch (error) {
-          console.error("Error parsing JSON data:", error);
-        }
+      //     if (Array.isArray(dataArray) && dataArray.length > 0) {
+      //       const restaurantInfo = dataArray.map(restaurant => ({
+      //         image_url: restaurant.image_url,
+      //         name: restaurant.name,
+      //         address: restaurant.address,
+      //         price: restaurant.price
+      //       }));
+        let randomRestaurantIndex = Math.floor(Math.random() * filteredForFood.length);
+        let randomRestaurant = filteredForFood[randomRestaurantIndex];
+        this.setState({ restaurant: randomRestaurant });
       } else {
         this.setState({restaurant: null})
       }
@@ -143,6 +147,7 @@ class RequestForm extends React.Component {
             restaurantImage={this.state.restaurant.image_url}
             restaurantAddress={this.state.restaurant.address}
             restaurantPrice={this.state.restaurant.price}
+            phone={this.state.restaurant.phone}
             handleCloseModal={this.handleCloseModal}
             restuarant={this.state.restaurant}
           />) : (<p>No restaurants found</p>)

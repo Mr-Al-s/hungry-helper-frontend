@@ -48,6 +48,7 @@ class RestaurantModal extends React.Component {
             />
             <p>Address: {this.props.restaurantAddress}</p>
             <p>Price: {this.props.restaurantPrice}</p>
+            <p>Phone: {this.props.phone}</p>
           </Modal.Body>
           <div id="buttonDiv">
             <Button onClick={this.props.handleCloseModal} id="closeButton">
