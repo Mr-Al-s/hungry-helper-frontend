@@ -126,6 +126,7 @@ class ReservationPage extends React.Component {
                   <Card.Title className="res-card-title">{reservation.name}</Card.Title>
                   <Card.Text className="res-card-text">Address: {reservation.address}</Card.Text>
                   <Card.Text className="res-card-text">Price: {reservation.price}</Card.Text>
+                  <Card.Text className="res-card-text">Phone: {reservation.phone}</Card.Text>
                   <Card.Text className="res-card-text">Date: {reservation.date}</Card.Text>
                   <Card.Text className="res-card-text">Time: {reservation.time}</Card.Text>
                   <Card.Text className="res-card-text">Number of Guests: {reservation.numberOfGuests}</Card.Text>
