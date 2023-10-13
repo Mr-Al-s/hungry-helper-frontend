@@ -62,7 +62,12 @@ class RequestForm extends React.Component {
   grabRestaurantData = async (lat, lon) => {
     let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
     try {
-      let restaurant = await axios.get(restaurantData);
+      const res = await this.props.auth0.getIdTokenClaims();
+       const jwt = res.__raw;
+       const config = {
+         headers: {"Authorization" : `Bearer ${jwt}`}
+       }
+      let restaurant = await axios.get(restaurantData, config);
       this.setState({
         restaurant: restaurant.data,
         price: this.state.price,

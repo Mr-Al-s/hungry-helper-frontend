@@ -14,27 +14,27 @@ function HomePage() {
         <img src={homepage} alt='A large variety of foods' className="homepage-image" />
         <img src={hungryhelperTitle} alt='HungryHelper Title' id='hungryhelperTitle' />
         <p className="homepage-subtitle">
-          Discover Dining Adventures with Mr. Al's HungryHelper: Your Go-To Random Restaurant Generator and Reservation Maker!
+          Discover dining adventures with Mr. Al's HungryHelper: Your Go-To Random Restaurant Generator and Reservation Maker!
         </p>
-      </div>
-      <div className="homepage-content">
-        {isAuthenticated ? (
-          <div>
-            <p className="homepage-message">
-              You are authenticated. You can now submit your request for a random restaurant.
-            </p>
-            <div id='linkDiv'>
-              <a href='/request-restaurant' id='homePageButton'>Submit Request</a>
+        <div className="homepage-content">
+          {isAuthenticated ? (
+            <div>
+              <p className="homepage-message">
+                You are authenticated. You can now submit your request for a random restaurant.
+              </p>
+              <div id='linkDiv'>
+                <a href='/request-restaurant' id='homePageButton'>Submit Request</a>
+              </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <p className="homepage-message">
-              Please log in so that you can submit your request for a random restaurant.
-            </p>
-            <AuthButtons />
-          </>
-        )}
+          ) : (
+            <>
+              <p className="homepage-message">
+                Please log in so that you can submit your request for a random restaurant.
+              </p>
+              <AuthButtons />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
