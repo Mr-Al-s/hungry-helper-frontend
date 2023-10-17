@@ -60,7 +60,7 @@ class RequestForm extends React.Component {
   }
 
   grabRestaurantData = async (lat, lon) => {
-    let restaurantData = `${process.env.REACT_APP_SERVER_URL}/restaurant?lat=${lat}&lon=${lon}`;
+    let restaurantData = `${process.env.REACT_APP_SERVER}/restaurant?lat=${lat}&lon=${lon}`;
     try {
       const res = await this.props.auth0.getIdTokenClaims();
        const jwt = res.__raw;
@@ -84,7 +84,7 @@ class RequestForm extends React.Component {
       if (filteredForFood.length >= 1) {
       //   let criteria = typeOfFood;
       //   let data = JSON.stringify(filteredForPrice);
-      //   let results = await axios.post(`${process.env.REACT_APP_SERVER_URL}/filteredRestaurant`, { criteria, data });
+      //   let results = await axios.post(`${process.env.REACT_APP_SERVER}/filteredRestaurant`, { criteria, data });
       //   let filteredData = results.data.filteredData
       //   const startIndex = filteredData.indexOf(':') + 1;
       //   const jsonData = filteredData.slice(startIndex);

@@ -6,7 +6,7 @@ import { withAuth0 } from "@auth0/auth0-react";
 import { Button } from "react-bootstrap";
 import "./ReservationPage.css";
 
-let SERVER = process.env.REACT_APP_SERVER_URL;
+let SERVER = process.env.REACT_APP_SERVER;
 class ReservationPage extends React.Component {
   constructor(props) {
     super(props);

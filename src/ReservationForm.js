@@ -13,7 +13,7 @@ import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
-let SERVER = process.env.REACT_APP_SERVER_URL
+let SERVER = process.env.REACT_APP_SERVER
 class ReservationForm extends Component {
   constructor(props) {
     super(props);
